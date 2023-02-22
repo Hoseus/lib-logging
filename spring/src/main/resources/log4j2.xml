@@ -1,0 +1,34 @@
+<Configuration name="Log4j2Configuration" status="WARN" monitorInterval="30">
+
+  <Appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+      <PatternLayout
+        pattern="%highlight{[%-5level]} [%d{yyyy-MM-dd HH:mm:ss.SSS}] %style{[%mdc{traceId}]}{blue} %style{[%t]}{yellow} %style{[%c]}{cyan} %style{[%mdc{logName}]}{magenta} - %highlight{%msg%n%throwable}"/>
+    </Console>
+
+    <Select>
+      <SystemPropertyArbiter propertyName="hoseus.logging.elk.logstash.enabled" propertyValue="true">
+        <Gelf
+          host="${sys:hoseus.logging.elk.logstash.host:-127.0.0.1}"
+          port="${sys:hoseus.logging.elk.logstash.port:-12201}"
+          version="1.1"
+          includeFullMdc="true"
+        >
+          <Field name="timestamp" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS}" />
+          <Field name="app-name" literal="${sys:hoseus.logging.elk.additional-field.app-name:-${sys:spring.application.name}}" />
+          <Field name="environment" literal="${sys:hoseus.logging.elk.additional-field.environment:-${sys:spring.profiles.active}}" />
+        </Gelf>
+      </SystemPropertyArbiter>
+      <DefaultArbiter>
+        <Null name="Logstash"/>
+      </DefaultArbiter>
+    </Select>
+  </Appenders>
+
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="Console"/>
+      <AppenderRef ref="Logstash"/>
+    </Root>
+  </Loggers>
+</Configuration>

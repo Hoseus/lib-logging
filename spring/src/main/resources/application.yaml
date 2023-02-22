@@ -1,0 +1,10 @@
+hoseus:
+  logging:
+    elk:
+      logstash:
+        enabled: false
+        host: "127.0.0.1"
+        port: 12201
+      additional-field:
+        app-name: ${spring.application.name}
+        environment: ${spring.profiles.active}
