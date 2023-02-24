@@ -1,0 +1,20 @@
+bumps:
+  - file: core/build.gradle.kts
+    regex:
+      - pattern: 'version = "$VERSION"'
+        semver: true
+
+  - file: spring/build.gradle.kts
+    regex:
+      - pattern: 'version = "$VERSION"'
+        semver: true
+
+  - file: quarkus/build.gradle.kts
+    regex:
+      - pattern: 'version = "$VERSION"'
+        semver: true
+
+  - file: README.md
+    regex:
+      - pattern: 'implementation\("com.hoseus:lib-logging.*:$VERSION"\)'
+        semver: true
