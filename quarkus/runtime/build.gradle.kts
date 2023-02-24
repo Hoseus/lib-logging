@@ -26,6 +26,7 @@ evaluationDependsOn(":lib-logging-quarkus-deployment")
 dependencies {
     implementation(platform("${quarkusPlatformGroupId}:${quarkusPlatformArtifactId}:${quarkusPlatformVersion}"))
     implementation("io.quarkus:quarkus-core")
+    implementation("io.quarkus:quarkus-arc")
     kapt("io.quarkus:quarkus-extension-processor:${quarkusPlatformVersion}")
 
     api("com.hoseus:lib-logging:$version")
